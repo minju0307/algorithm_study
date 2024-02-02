@@ -1,13 +1,24 @@
 def solution(people, limit):
-    people = sorted(people, reverse=True) 
-    ships = [0]*len(people) ## 사람 수 만큼 배를 준비해놓기 
+    people = sorted(people) 
+    ships = [[0,0] for _ in range(len(people))] ## [현재 중량, 탄 사람의 숫자]
+    count = 0
     
-    for p in people:
-        for idx, ship in enumerate(ships): 
-            if ship + p <= limit: ## 기존 배에 태울 수 있으면 태우기 
-                ships[idx] += p
-                break
-            else:
-                continue ## 다른 배에 태우기, 모두 태울 수 없으면 새로운 배에 타기 
+    for idx, p in enumerate(people):
+        if idx == 0 : 
+            ships[idx] = [p, 1]
+            count +=1
+            continue
+        ## 이전 보트에 함께 타는 경우 
+        if (ships[idx-1][0] + p <= limit) and (ships[idx-1][1] == 1):
+            ships[idx-1][0] += p 
+            ships[idx-1][1] += 1
+            continue
+        ## 새로운 보트에 타는 경우 
+        else:
+            ships[idx] = [p, 1]
+            count += 1
 
-    return len(people) - ships.count(0)
+    return count 
+
+if __name__=='__main__':
+    print(solution([70, 50, 80, 50], 100))
