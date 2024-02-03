@@ -1,19 +1,14 @@
 
 def solution(number, k):
-    number = list(number)
+    stack = []
     
-    window = len(number)-k
-    start = 0
+    for num in number:
+        while stack and stack[-1] < num and k > 0:
+            stack.pop()
+            k-=1
+        stack.append(num) 
     
-    while len(number) > window:
-        # print("***")
-        # print(start)
-        number.remove(min(number[start:window]))
-        # print(number)
-        # print()
-        start+=1
-        
-    return ''.join(number)
+    return ''.join(stack)
 
 if __name__=='__main__':
     print(solution("4177252841", 4))
