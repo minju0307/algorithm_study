@@ -7,6 +7,9 @@ def solution(number, k):
             stack.pop()
             k-=1
         stack.append(num) 
+        
+    if len(stack) > len(number)-k: ## 모두 다 같은 숫자로 이루어져 있는 경우 
+        stack = stack[:len(number)-k]
     
     return ''.join(stack)
 
