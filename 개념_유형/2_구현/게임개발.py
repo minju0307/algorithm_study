@@ -26,7 +26,7 @@ while True:
             ## 바다도 아니고, 아직 방문하지 않았다면, 
             if maps[x+dx[d]][y+dy[d]] == 0 : 
                 ## 방문처리
-                maps[x+dx[d]][y+dy[d]] = 1 
+                maps[x+dx[d]][y+dy[d]] = 2 
                 count += 1
                 ## 해당 위치로 이동 
                 x = x+dx[d] 
@@ -37,11 +37,10 @@ while True:
     
     ## 3단계 : 4방향 모두 갈 수 없는 경우  
     if i == 3:
-        ## 한 칸 뒤로 갈 수 있으면 그곳으로 가기 
+        d = directions[d] ## 원래의 방향을 바라보기 
+        ## 한 칸 뒤로 갈 수 있으면 원래 있던 곳으로 돌아가기 
         if x+dx[back_directions[d]] >= 0 and x+dx[back_directions[d]] < n and y+dy[back_directions[d]] >= 0 and y+dy[back_directions[d]] < m:
-            if maps[x+dx[back_directions[d]]][y+dy[back_directions[d]]] == 0:
-                maps[x+dx[back_directions[d]]][y+dy[back_directions[d]]] = 1
-                count += 1
+            if maps[x+dx[back_directions[d]]][y+dy[back_directions[d]]] == 0 or maps[x+dx[back_directions[d]]][y+dy[back_directions[d]]] == 2:
                 x = x+dx[back_directions[d]]
                 y = y+dy[back_directions[d]]
         ## 이동할 수 없는 경우에는 종료하기 
