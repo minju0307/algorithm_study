@@ -14,7 +14,11 @@ while queue:
     if x == n-1 and y == m-1 :
         print(count)
         break
+    if x > 0 and graph[x-1][y] == 1: ## 위로 갈 수 있다면
+        queue.append((x-1, y, count+1))
     if x < n-1 and graph[x+1][y] == 1: ## 아래로 갈 수 있다면
         queue.append((x+1, y, count+1))
+    if y > 0 and graph[x][y-1] == 1: ## 왼쪽으로 갈 수 있다면
+        queue.append((x, y-1, count+1))
     if y < m-1 and graph[x][y+1] == 1: ## 오른쪽으로 갈 수 있다면
         queue.append((x, y+1, count+1))
