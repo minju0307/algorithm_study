@@ -1,32 +1,23 @@
-from collections import deque 
+from collections import deque
 
 def solution(prices):
-    times = [0] * len(prices)
-    queue = deque([(0, 0)]) ## (주식 가격 idx, 가격이 떨어지지 않은 시간)
+    times = []
+    queue = deque(prices)
     
     while queue:
+        # print("***")
+        # print(queue)
+        time = 0
+        price = queue.popleft()
         
-        if queue[-1][0] == len(prices):
-            break
-        
-        print("***")
-        print(queue)
-        
-        for _ in range(len(queue)):
-            idx, time = queue.popleft()
+        for now in queue:
+            time += 1
+            if price > now:
+                break
             
-            if idx < len(prices)-1 and prices[idx] <= prices[idx+1] :
-                queue.append((idx, time+1))
-                times[idx] = time
-            elif idx < len(prices)-1 and prices[idx] > prices[idx+1] :
-                times[idx] = time + 1
-            else:
-                times[idx] = time
+        times.append(time)
         
-        queue.append((idx+1, 0))
-    
-    return times
-
+    return times                 
 
 if __name__=='__main__':
     print(solution([1, 2, 3, 2, 3])) ## return 4,3,1,1,0
