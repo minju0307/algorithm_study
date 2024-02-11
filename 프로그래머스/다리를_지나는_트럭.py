@@ -8,11 +8,10 @@ def solution(bridge_length, weight, truck_weights):
     while queue:
         answer += 1
         hap = 0
+        # print("***")
+        # print(queue)
         
         for _ in range(len(queue)):
-            print("***")
-            print(queue)
-        
             idx, length = queue.popleft()
             
             ## 다리를 아직 지나지 않았다면 다시 넣어주기 
