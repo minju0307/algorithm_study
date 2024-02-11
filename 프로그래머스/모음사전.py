@@ -1,42 +1,30 @@
+count = 0
+answer = 0
 
+def dfs(now, word, vowels):
+    ## 방문하자마자 해야 하는 일
+    global count
+    global answer
+    count +=1 
+    
+    ## 종료 조건
+    if now == word :
+        answer = count
+        return
+    
+    ## 순회
+    if len(now) < 5:
+        for v in vowels:
+            dfs(now+v, word, vowels)
+    
 def solution(word):
     global count
+    global answer
+    
     vowels = 'AEIOU'
-    
-    count = 1
-    level = 1
-    previous = 'A'
-    stack = [previous]
-    
-    while stack:
-        now = stack.pop()
-        count += 1
-        if level == 5:
-            level = 1
-        
-        if previous[-1] == 'U':
-            level += 1
-            current = previous[:-level] + now
-        elif level > 1:
-            current = previous + now
-        else:
-            current = previous[:-1] + now
-        
-        print(current)
-        print(level)
-        
-            
-        if current == word:
-            break
-        
-        if len(current) < 5:
-            stack.extend(list(vowels)[::-1])
-        
-        # print(stack)
-        previous = current
-    
-    
-    return count
+    for v in vowels:
+        dfs(v, word, vowels)
+    return answer
 
 if __name__=="__main__":
-    print(solution("AAE"))
+    print(solution("EIO"))
