@@ -2,7 +2,7 @@ import sys
 input = sys.stdin.readline
 
 n, m = map(int, input().split())
-visited = [False]*(n+1) ## 중복을 피하는 효과
+visited = [False]*(n+1) ## 중복을 피하는 효과 / visited가 없을 때는 중복이 계속 생기는 현상이 있었음
 
 def dfs(sequence, visited):
     if len(sequence) == m:
