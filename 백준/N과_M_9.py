@@ -8,22 +8,26 @@ input = sys.stdin.readline
 n, m = map(int, input().split())
 seq = list(map(int, input().split()))
 seq = sorted(seq) ## 수열은 사전 순으로 증가하는 순서로 출력해야 한다. 
+visited = [False] * n
 ans = []
 
-def dfs(sub):
+def dfs(sub, visited):
     
     if len(sub) == m:
         result = [seq[i] for i in sub]
-        if result not in ans: ## 중복되는 수열을 출력하면 안 된다.
-            print(*result)
-            ans.append(result)
+        ans.append(result)
         return 
     
-    for i in range(n): ## 수열의 인덱스에 대하여 
-        if i not in sub:
+    for i in range(len(seq)):
+        if not visited[i]:
+            visited[i] = True
             sub.append(i)
-            dfs(sub)
+            dfs(sub, visited)
             sub.pop()
+            visited[i] = False
             
-
-dfs([])
+            
+dfs([], visited)
+answers = sorted(list(set(map(tuple, ans))))
+for answer in answers:
+    print(*answer)
