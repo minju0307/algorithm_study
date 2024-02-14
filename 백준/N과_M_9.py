@@ -15,7 +15,7 @@ def dfs(sub, visited):
     
     if len(sub) == m:
         result = [seq[i] for i in sub]
-        ans.append(result)
+        ans.append(result) ## 여기서 not in 으로 확인하면 시간초과
         return 
     
     for i in range(len(seq)):
@@ -28,6 +28,6 @@ def dfs(sub, visited):
             
             
 dfs([], visited)
-answers = sorted(list(set(map(tuple, ans))))
+answers = sorted(list(set(map(tuple, ans)))) ## 모든 경우의 수에 대해서 마지막에 처리해주는 것이 필요 
 for answer in answers:
     print(*answer)
