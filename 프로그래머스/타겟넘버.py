@@ -3,15 +3,11 @@ answer = 0
 def dfs(i, numbers, hap, target):
     global answer 
     if i == len(numbers):
-        # print(f"   >>> depth: {i}, hap : {hap}")
         if hap == target:
             answer += 1
             return
         else:
             return 
-    
-    # print("***")
-    # print(f"depth : {i}, n : {numbers[i]}")
     dfs(i+1, numbers, hap+numbers[i], target)
     dfs(i+1, numbers, hap-numbers[i], target) 
 
