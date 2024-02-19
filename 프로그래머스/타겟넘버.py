@@ -1,6 +1,6 @@
 answer = 0
 
-def dfs(i, numbers, hap, visited, target):
+def dfs(i, numbers, hap, target):
     global answer 
     if i == len(numbers):
         # print(f"   >>> depth: {i}, hap : {hap}")
@@ -10,18 +10,15 @@ def dfs(i, numbers, hap, visited, target):
         else:
             return 
     
-    if not visited[i]:
-        # print("***")
-        # print(f"depth : {i}, n : {numbers[i]}")
-        visited[i] = True
-        dfs(i+1, numbers, hap+numbers[i], visited, target)
-        dfs(i+1, numbers, hap-numbers[i], visited, target) 
-        visited[i] = False
+    # print("***")
+    # print(f"depth : {i}, n : {numbers[i]}")
+    dfs(i+1, numbers, hap+numbers[i], target)
+    dfs(i+1, numbers, hap-numbers[i], target) 
+
 
 def solution(numbers, target):
     global answer
-    visited = [False] * len(numbers)
-    dfs(0, numbers, 0, visited, target)
+    dfs(0, numbers, 0, target)
     
     return answer
 
