@@ -9,22 +9,25 @@
 ans = []
 
 def dfs(start, graph, visited, path, length):
-    path.append(start)
-    print(path)
-    
+    # print(path)
+    global ans
     if len(path) == length:
-        print(">>>")
         ans.append(path)
-        return 
+        print(ans)
+        return
     
     for idx, next in enumerate(graph[start]):
         if not visited[start][idx]:
             visited[start][idx] = True
+            path.append(next)
             dfs(next, graph, visited, path, length)
+            path.pop()
             visited[start][idx] = False
-    return 
+    return
 
 def solution(tickets):
+    global ans
+    
     graph = dict()
     visited = dict()
     for a, b in tickets:
@@ -35,14 +38,16 @@ def solution(tickets):
             graph[a].append(b)
             visited[a].append(False)
     
-    print(graph)
+
+
+    dfs("ICN", graph, visited, ["ICN"], len(tickets)+1)
+
     print()
+    print(ans)
     
-    dfs("ICN", graph, visited, [], len(tickets)+1)
+    # answer = sorted(ans)[0]
     
-    answer = sorted(ans)[0]
-    
-    return answer
+    return ans
 
 if __name__ == '__main__':
-    print(solution([["ICN", "JFK"], ["HND", "IAD"], ["JFK", "HND"]]))
+    print(solution([["ICN", "SFO"], ["ICN", "ATL"], ["SFO", "ATL"], ["ATL", "ICN"], ["ATL","SFO"]]))
