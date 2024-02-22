@@ -1,37 +1,25 @@
 ans = []
 
-def dfs(start, graph, visited, path, length):
-    
-    # print(path)
+def dfs(start, tickets, visited, path, length):
+
     if len(path) == length:
-        ans.append(path[:]) ## 복사하여 넣는 것의 유의할 필요 
+        ans.append(path[:]) ## deepcopy 필요, shallow copy 인 경우 "ICN" 으로 path 가 변환될 수 있음   
         return 
     
-    if start in graph.keys(): ## 런타임 에러 방지 
-        for idx, next in enumerate(graph[start]):
-            if not visited[start][idx]:
-                visited[start][idx] = True
-                path.append(next)
-                dfs(next, graph, visited, path, length)
-                path.pop()
-                visited[start][idx] = False
-        return
+    for idx, (a, b) in enumerate(tickets):
+        if start == a and not visited[idx]:
+            visited[idx] = True
+            path.append(b)
+            dfs(b, tickets, visited, path, length)
+            path.pop()
+            visited[idx] = False
+    return
 
 def solution(tickets):
-    
-    graph = dict()
-    visited = dict()
-    for a, b in tickets:
-        if a not in graph.keys():
-            graph[a] = [b]
-            visited[a] = [False]
-        else:
-            graph[a].append(b)
-            visited[a].append(False)
-
-    dfs("ICN", graph, visited, ["ICN"], len(tickets)+1)
+    visited = [False]*len(tickets)
+    dfs("ICN", tickets, visited, ["ICN"], len(tickets)+1)
     
     return min(ans)
 
 if __name__ == '__main__':
-    print(solution([["ICN", "JFK"], ["HND", "IAD"], ["JFK", "HND"]]))
+    print(solution([["ICN", "SFO"], ["ICN", "ATL"], ["SFO", "ATL"], ["ATL", "ICN"], ["ATL","SFO"]]))
