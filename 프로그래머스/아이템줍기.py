@@ -3,7 +3,7 @@ from collections import deque
 def solution(rectangle, characterX, characterY, itemX, itemY):
     answer = 0
     
-    maps = [[-1]*200 for _ in range(200)] ## maps 의 최솟값을 어떻게 설정? 
+    maps = [[-1]*102 for _ in range(102)] ## maps 의 최솟값을 어떻게 설정? 
     
     for rec in rectangle:
         x1, y1, x2, y2 = map(lambda x: x*2, rec) ## 좌표를 두 배로 해주기 
@@ -16,27 +16,30 @@ def solution(rectangle, characterX, characterY, itemX, itemY):
                 elif maps[x][y] != 0:
                     maps[x][y] = 1
     
-    queue = deque([(characterX*2, characterY*2, 0)]) ## (x좌표, y좌표, 거리)
-    maps[characterX][characterY] = 2 ## 방문처리
+    queue = deque([(characterX*2, characterY*2)]) ## (x좌표, y좌표)
+    
     dx = [1, -1, 0, 0]
     dy = [0, 0, 1, -1]
     
+    visited = [[0]*102 for _ in range(102)]
+    visited[characterX*2][characterY*2] = 1
+    
     while queue:
-        x, y, dis = queue.popleft()
+        x, y = queue.popleft()
         
         if x == itemX*2 and y == itemY*2:
-            answer = dis // 2
+            answer = (visited[x][y]-1) // 2
             break
         
         for i in range(4):
             nx = x + dx[i]
             ny = y + dy[i]
             
-            if maps[nx][ny] == 1:
-                queue.append((nx, ny, dis+1))
-                maps[nx][ny] = 2 
+            if visited[nx][ny] == 0 and maps[nx][ny] == 1:
+                queue.append((nx, ny))
+                visited[nx][ny] = visited[x][y] +1
         
     return answer
 
 if __name__ == '__main__':
-    print(solution([[1,1,7,4],[3,2,5,5],[4,3,6,9],[2,6,8,8]], 1, 3, 7, 8))
+    print(solution([[1, 1, 4, 4], [2, 2, 5, 5], [3, 3, 7, 8]], 1, 1, 5, 3))
