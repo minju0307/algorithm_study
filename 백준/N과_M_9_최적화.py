@@ -17,7 +17,8 @@ def dfs(sub, visited):
         print(*result)
         return 
     
-    overlap = 0 ## 각 뎁스별로 overlap이 일어나는지 아닌지를 확인하는 변수를 정의 (각 뎁스별로 같은 숫자는 확인하지 않게 됨, 정렬이 되어 있기 때문에 사용 가능)
+    ## 각 뎁스별로 overlap이 일어나는지 아닌지를 확인하는 변수를 정의 
+    overlap = 0  ## (각 뎁스별로 같은 숫자는 확인하지 않게 됨, 정렬이 되어 있기 때문에 사용 가능)
     for i in range(len(seq)):
         if not visited[i] and overlap != seq[i]:
             visited[i] = True
