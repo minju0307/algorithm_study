@@ -18,7 +18,8 @@ def dfs(sub, visited):
         print(*result)
         return
     
-    overlap = 0 ## depth 별로 중복을 막을 수 있는 방법 
+    ## depth 별로 중복을 막을 수 있는 방법
+    overlap = 0  
     for i in range(len(seq)):
         if not visited[i] and seq[i] != overlap : 
             if sub and seq[sub[-1]] <= seq[i]:
