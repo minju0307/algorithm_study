@@ -19,7 +19,7 @@ def dfs(start, sub, visited):
         return
     
     overlap = 0 ## depth 별로 중복을 막을 수 있는 방법 
-    for i in range(start, n): ## 비내림차순이 되기 위하여 start 변수부터 탐색 (이전 뎁스 i보다 하나 큰 값)
+    for i in range(start, n): ## 포인트 : 비내림차순이 되기 위하여 start 변수부터 탐색 (이전 뎁스 i보다 하나 큰 값)
         if not visited[i] and seq[i] != overlap : 
             sub.append(i)
             visited[i] = True
