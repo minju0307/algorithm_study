@@ -23,7 +23,8 @@ def solution(rectangle, characterX, characterY, itemX, itemY):
     
     visited = [[0]*102 for _ in range(102)]
     visited[characterX*2][characterY*2] = 1
-    
+     
+     
     while queue:
         x, y = queue.popleft()
         
