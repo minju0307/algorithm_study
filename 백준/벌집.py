@@ -4,8 +4,10 @@ input = sys.stdin.readline
 
 n = int(input().rstrip())
 
-for k in range(1, (1000000000//6)):
-    if 1+(6*(sum(range(1,k+1)))) > n :
-        break
+house = 1
+cnt = 1
+while n > house:
+    house += 6*cnt
+    cnt += 1
 
-print(k+1)
+print(cnt)
