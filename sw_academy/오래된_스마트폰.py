@@ -28,11 +28,11 @@ def calculation(n1, n2, operator):
         result = n1*n2
     else:
         if n2 == 0:
-            return False
+            return 1e9
         else:
             result = n1//n2
     if result < 0 or result > 999:
-        return False
+        return 1e9
     else:
         return result
 
@@ -66,11 +66,11 @@ for test_case in range(1, T+1):
         for num in nums:
             for op in can_op:
                 result = calculation(now, num, operation_dict[op])
-                if result and dp[result] > dp[now] + dp[num] + 1 : ## 문제 조건을 벗어나지 않는 숫자가 나왔다면 
+                if result != 1e9 and dp[result] > dp[now] + dp[num] + 1 : ## 문제 조건을 벗어나지 않는 숫자가 나왔다면 
                     dp[result] = dp[now] + dp[num] + 1 ## operator와 = 
                     q.append(result)
     
-    if dp[target] == 21:
+    if dp[target] >= m:
         print(f"#{test_case}", -1)
         continue
     else:
