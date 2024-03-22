@@ -1,9 +1,6 @@
-import sys
 from collections import deque
 
-input = sys.stdin.readline
-
-T = int(input().rstrip())
+T = int(input())
 operation_dict = {"1":"+", "2":"-", "3":"*", "4":"/"}
 
 answers = []
@@ -46,7 +43,7 @@ def calculation(_list):
 
 for test_case in range(1, T+1):
     tmp_answers = []
-    ## 입력 받기 
+    # 입력 받기 
     n, o, m = map(int, input().split())
     can_num = list(map(int, input().split()))
     can_op = input().split()
@@ -66,7 +63,6 @@ for test_case in range(1, T+1):
         count, result, history = q.popleft()
         # print(">>>")
         # print(count, result, history)
-        # print(q)
         
         ## 종료 조건 
         if result == target:
@@ -82,31 +78,27 @@ for test_case in range(1, T+1):
         
         ## 숫자에 해당하는 것들을 다음 queue에 넣기 (숫자가 3개 이상 연달아 갈 수 없음)
         for num in can_num:
-            result = calculation(history+[num])
-            if result and 0 <= result <= 999:
-                q.append((count+1, result, history+[num]))
+            next_result = calculation(history+[num])
+            if next_result and 0 <= next_result <= 999:
+                q.append((count+1, next_result, history+[num]))
         
-        ## operation에 해당하는 것들을 다음 queue에 넣기 (뒤에 숫자를 붙여서 넣어줘야함)
-        for op in can_op:
-            for num in can_num:
-                if op ==  "4" and num == 0: ## 0으로 나눌 수 없음 
-                    continue
-                result = calculation(history+[operation_dict[op]]+[num])
-                if result and 0 <= result <=999:
-                    q.append((count+2, result, history+[operation_dict[op]]+[num]))
+        ## 만약 현재가 숫자라면, 연산자에 해당하는 것들을 다음 queue에 넣기
+        if type(history[-1]) == int:
+            for op in can_op:
+                q.append((count+1, result, history+[operation_dict[op]]))
                         
+    print(f"#{test_case}", answer)
 
-    answers.append(answer)
+# for idx, answer in enumerate(answers):
+#     print(f"#{idx+1}", answer)
 
-for answer in answers:
-    print(answer)
     
 '''
 1
-5 3 10
-8 7 1 2 6
-2 4 3
-981
+6 4 5
+0 1 2 3 4 7
+1 2 3 4
+5
 '''
 
 '''
