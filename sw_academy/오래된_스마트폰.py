@@ -54,7 +54,7 @@ for test_case in range(1, T+1):
     
     q = []
     for num in can_num:
-        q.append((1, [num])) ## 버튼 누른 횟수, 계산 과정
+        q.append((1, num, [num])) ## 버튼 누른 횟수, 계산 결과, 계산 과정
     q = deque(q)
     # print(q)
     
@@ -63,57 +63,40 @@ for test_case in range(1, T+1):
         # print("***")
         # print(q)
         
-        result, count, history = q.popleft()
-        print(">>>")
-        print(result, count, history)
+        count, result, history = q.popleft()
+        # print(">>>")
+        # print(count, result, history)
+        # print(q)
         
         ## 종료 조건 
         if result == target:
             if ("+" in history) or ("-" in history) or ("*" in history) or ("/" in history):
                 answer = count + 1
-                tmp_answers.append(answer)
                 break
             else:
                 answer = count
-                tmp_answers.append(answer)
                 break
         elif count >= m :
             answer = -1
-            tmp_answers.append(answer)
             break
         
         ## 숫자에 해당하는 것들을 다음 queue에 넣기 (숫자가 3개 이상 연달아 갈 수 없음)
         for num in can_num:
-            concat_num = int(str(result)+str(num))
-            if concat_num <= 999:
-                q.append((concat_num, count+1, history+[num]))
+            result = calculation(history+[num])
+            if result and 0 <= result <= 999:
+                q.append((count+1, result, history+[num]))
         
         ## operation에 해당하는 것들을 다음 queue에 넣기 (뒤에 숫자를 붙여서 넣어줘야함)
         for op in can_op:
-            if op=="1":
-                for num in can_num:
-                    if 0 <= result+num <=999:
-                        q.append((result+num, count+2, history+[operation_dict[op]]+ [num]))
-            elif op=="2":
-                for num in can_num:
-                    if 0 <= result-num <=999:
-                        q.append((result-num, count+2, history+[operation_dict[op]]+ [num]))
-            elif op=="3":
-                for num in can_num:
-                    if 0 <= result*num <=999:
-                        q.append((result*num, count+2, history+[operation_dict[op]]+ [num]))
-            else:
-                for num in can_num:
-                    if num == 0 : ## 0 으로 나눌 수 없음
-                        continue
-                    if 0 <= result//num <=999:
-                        q.append((result//num, count+2, history+[operation_dict[op]]+ [num]))
+            for num in can_num:
+                if op ==  "4" and num == 0: ## 0으로 나눌 수 없음 
+                    continue
+                result = calculation(history+[operation_dict[op]]+[num])
+                if result and 0 <= result <=999:
+                    q.append((count+2, result, history+[operation_dict[op]]+[num]))
+                        
 
-    # print(tmp_answers)
-    if len(tmp_answers) == 1:
-        answers.append(tmp_answers[0])
-    else:
-        answers.append(sorted(tmp_answers)[1])
+    answers.append(answer)
 
 for answer in answers:
     print(answer)
